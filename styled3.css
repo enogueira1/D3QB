@@ -1,0 +1,620 @@
+body {
+    background-color: transparent;
+    height: 100vh;
+    overflow: auto;
+}
+
+#visualization-container {
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+    margin: 20px auto 0;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#plot-area {
+    flex-grow: 1; /* Allow plot area to grow but leave space for legend */
+    max-width: 825px;
+    background-color: transparent;
+    font-family: Arial, sans-serif;
+    font-size:20px;
+}
+
+#plot-area svg{
+    display:inline-block;
+    width:822px;
+    height:589px;
+}
+
+#legend-area {
+    width: 175px;
+    height: 575px;
+    padding-top: 10px;
+    background-color: #ffffff;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:28% 40% 30%;
+    gap: 1px; /* Space between grid items */
+}
+
+.legend-elements svg{
+    border-color:#edecec;
+    border-width:1px;
+    border-style:none;
+    box-shadow:-1px 0 3px 1px #bebaba;
+    border-radius: 10px;
+    opacity:1;
+    top:0;
+    background-color:#edecec;
+    background-image:linear-gradient(to right, #ada996 0%, #f2f2f2 0%, #dbdbdb 71%, #eaeaea 100%);
+}
+
+.legend-elements {
+    border: 1px solid #ebe9e9;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    height: 200px;
+    position: relative;
+    justify-content: space-between;
+}
+
+.legend-box-bubble {
+    border: 1px solid #ebe9e9;
+    padding: 5px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    position: relative;
+    justify-content: space-between;
+}
+
+.legend-item-container {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    left:5px;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    left:5px;
+}
+
+#legend-area .legend-elements .legend-item-container{
+    position:relative;
+    max-width:275px;
+    width:150px;
+}
+
+
+#legend-area .legend-elements{
+    left:-5px;
+    top:-4px;
+}
+
+#legend-area .legend-box{
+    border-color:#ebe9e9;
+    border-width:1px;
+    border-style:solid;
+    border-radius: 5px;
+    position:relative;
+    padding-bottom:25px;
+    left:-5px;
+    top:-11px;
+}
+
+#legend-area .legend-box-bubble{
+    border-color:#ebe9e9;
+    border-style:solid;
+    border-width:1px;
+    position:relative;
+    left:-5px;
+    top:-4px;
+}
+
+#legend-area .legend-box-bubble .toggle-container{
+    position:relative;
+}
+
+.legend-box-bubble span{
+    position:relative;
+    right:-12px;
+    left:8px;
+    width:115px;
+}
+
+#legend-area .legend-box .week-selector-container .selector-title{
+    left:88px;
+    top:25px;
+}
+
+#legend-area .legend-box .year-selector-container .selector-title{
+    top:-10px;
+}
+
+.legend-item-container svg {
+    margin-right: 5px; /* Space after the SVG symbol */
+}
+
+.legend-item-container svg {
+    transition: all 0.2s ease; /* Smooth transition for button press */
+}
+
+.legend-elements .legend-item-container span{
+    top:-5px;
+}
+
+.legend-elements span{
+    position:relative;
+    right:-8px;
+    left: 15px;
+    top:-5px;
+}
+
+.legend-elements svg{
+    position:relative;
+    right:-12px;
+    left:16px;
+    top:-5px;
+}
+
+.legend-elements-title {
+    width:100%;
+    background-color: #171717; /* Background color for the title */
+    color:#f7f7f7;
+    border-top-left-radius: 5px; /* Round the top left corner */
+    border-top-right-radius: 5px; /* Round the top right corner */
+    text-align: center;
+    padding: 1px 0; /* Padding for the title */
+    border-color:#000000;
+    border-style:solid;
+    border-width:1px;
+    position:relative;
+    top:-10px;
+}
+
+.legend-filters-title {
+    width:100%;
+    background-color: #171717;
+    color:#f7f7f7;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+    padding: 1px 0;
+    border-color:#000000;
+    border-style:solid;
+    border-width:1px;
+    position:relative;
+    left:-0.5px;
+}
+
+.legend-box-bubble-title {
+    width:100%;
+    background-color: #171717;
+    color:#f7f7f7;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+    padding: 1px 0;
+    border-color:#000000;
+    border-style:solid;
+    border-width:1px;
+    position:relative;
+    top:-6px;
+    left:0;
+}
+
+.td-dot {
+    fill: #2cc526;
+    stroke: #004403;
+    stroke-width: 1px;
+}
+
+.int-dot {
+    fill: #de0909;
+    stroke: #343131;
+    stroke-width: 1px;
+}
+
+.complete-pass {
+    fill: #348fea; /* Blue for complete passes */
+    stroke: #1a1f4f; /* Darker blue for the stroke */
+    stroke-width: 1px;
+}
+
+.incomplete-pass {
+    fill: #C9C9C9; /* Gray for incomplete passes */
+    stroke: #5f6368; /* Darker gray for the stroke */
+    stroke-width: 1px;
+}
+
+
+.led-light {
+    width: 5px; /* Size of the inner LED */
+    height: 5px; /* Size of the inner LED */
+    border-radius: 50%; /* Circular shape */
+    background-color: #0F0; /* Bright green color for the LED */
+    background-image: radial-gradient(circle at 30% 30%, white, #0F0 60%); /* Glossy effect */
+    position: relative;
+    border: 1px solid #c9c9c9; /* Gray border */
+    box-shadow:
+            0 0 2px #0F0, /* Inner green glow */
+            0 0 4px #0F0, /* Middle green glow */
+            0 0 8px #0F0, /* Large green glow */
+            0 0 0 1px #C9C9C9; /* Gray line */
+    margin-bottom: 10px; /* Space between the LEDs if you have more than one */
+    top: 1px;
+    right: -6px;
+}
+
+.year-selector-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    top:20px;
+}
+
+.year-toggle {
+    background: #eee;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.year-display {
+    width: 50px;
+    text-align: center;
+    margin: 0 10px;
+    font-size: 16px;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    position:relative;
+    top:-10px;
+}
+
+#left-arrow{
+    background-color:#fcfcfc;
+    position:relative;
+    top:-10px;
+}
+
+#right-arrow{
+    background-color:#fcfcfc;
+    position:relative;
+    top:-10px;
+}
+
+.week-selector-container {
+    display: flex;
+    justify-content: center; /* Center children horizontally */
+    align-items: center; /* Center children vertically */
+    position: relative; /* Needed for absolute positioning of children */
+    gap: 10px; /* Spacing between items */
+}
+
+.week-toggle {
+    background: #eee;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.week-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribute space between week number and arrow */
+    width: 40px; /* Adjust as needed to fit content */
+    height:20px;
+    padding: 0 5px; /* Padding on sides */
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    position:relative;
+    top:25px;
+    left:5px;
+}
+
+.week-dropdown {
+    position: absolute;
+    border-color:#C9C9C9;
+    font-size:12px;
+    left:45px;
+    width: 80px;
+    display: none;
+    overflow: auto;
+}
+
+/* Hide scrollbar but keep functionality */
+.week-dropdown::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+/* Optional: styling for the scrollbar thumb (part you drag) - might not be needed */
+.week-dropdown::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+.week-dropdown-arrow {
+    position: relative;
+    border: 1px solid #807979;
+    transform: scale(0.85);
+    border-radius: 5px;
+    left:5px;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+#week-left-arrow,
+#week-right-arrow {
+    background-color: #fcfcfc;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    position:relative;
+    top:25px;
+    left:5px;
+    /*border-color:#edecec;*/
+    /*border-width:1px;*/
+    /*border-style:none;*/
+    /*box-shadow:-1px 0 3px 1px #bebaba;*/
+    /*border-radius: 10px;*/
+    /*opacity:1;*/
+    /*top:0;*/
+    /*background-color:#edecec;*/
+    /*background-image:linear-gradient(to right, #ada996 0%, #f2f2f2 0%, #dbdbdb 71%, #eaeaea 100%);*/
+}
+
+#week-right-arrow{
+    left:-5px;
+}
+
+.year-selector-container .selector-title,
+.week-selector-container .selector-title {
+    font-weight: bold;
+    position: absolute;
+    top: 2px; /* Adjust this value as needed to move the title above the container */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+}
+
+.week-selector-container .selector-title {
+    position: absolute;
+    top: -25px; /* Adjust this value to position the title above the selector */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap; /* Prevent the title from wrapping */
+}
+
+#legend-area .legend-box .week-selector-container .selector-title{
+    left:82px;
+}
+
+.week-selector-container .week-title {
+    top: 26px; /* Adjust this value to move the Week title down */
+}
+
+.year-selector-container,
+.week-selector-container {
+    position: relative;
+    text-align: center;
+    padding-top: 20px; /* Provide space for the title */
+}
+
+.cleanToggle {
+    position: relative;
+    display: inline-block;
+    width: 3.2em;
+    height: 1.5em;
+}
+
+.cleanToggle > input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    top: 0;
+    left: 0;
+}
+
+.cleanToggle > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #bc4b51; /* Red for "off" state */
+    border-radius: 2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: inset 0 0.2em 0.1em hsla(0, 0%, 0%, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.cleanToggle > label::after {
+    content: 'OFF'; /* Default text */
+    pointer-events: none; /* Ignore pointer events */
+}
+
+.cleanToggle > input:checked + label {
+    background-color: #4fbe79; /* Green for "on" state */
+}
+
+.cleanToggle2 {
+    position: relative;
+    display: inline-block;
+    width: 3.2em;
+    height: 1.5em;
+}
+
+.cleanToggle2 > input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    top: 0;
+    left: 0;
+}
+
+.cleanToggle2 > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #bc4b51; /* Red for "off" state */
+    border-radius: 2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: inset 0 0.2em 0.1em hsla(0, 0%, 0%, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.cleanToggle2 > label::after {
+    content: 'OFF'; /* Default text */
+    pointer-events: none; /* Ignore pointer events */
+}
+
+.cleanToggle2 > input:checked + label {
+    background-color: #4fbe79; /* Green for "on" state */
+}
+
+.cleanToggle3 {
+    position: relative;
+    display: inline-block;
+    width: 3.2em;
+    height: 1.5em;
+}
+
+.cleanToggle3 > input {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    margin: 0;
+    top: 0;
+    left: 0;
+}
+
+.cleanToggle3 > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #bc4b51; /* Red for "off" state */
+    border-radius: 2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: inset 0 0.2em 0.1em hsla(0, 0%, 0%, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.cleanToggle3 > label::after {
+    content: 'OFF'; /* Default text */
+    pointer-events: none; /* Ignore pointer events */
+}
+
+.cleanToggle3 > input:checked + label {
+    background-color: #4fbe79; /* Green for "on" state */
+}
+
+.cleanToggle > input:checked + label::after {
+    content: 'ON'; /* Text changes to "ON" */
+}
+
+.cleanToggle2 > input:checked + label::after {
+    content: 'ON'; /* Text changes to "ON" */
+}
+
+.cleanToggle3 > input:checked + label::after {
+    content: 'ON'; /* Text changes to "ON" */
+}
+
+.pixel-font {
+    font-family: 'Lucida Console', 'Courier New', monospace;
+    font-size: 10px; /* Set the font size to 10px */
+    fill: #1c1c1c; /* Set the text color to black */
+}
+
+#tooltip {
+    position: absolute;
+    visibility: hidden;
+    background-color: #fff;
+    border: 1px solid #2226de;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: system-ui, sans-serif;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    max-width: 250px; /* Adjust the max-width as needed */
+    word-wrap: break-word;
+    white-space: pre-wrap; /* This will preserve intentional breaks and spaces */
+}
+
+/*.d3qb-title {*/
+/*    text-align: center;*/
+/*    display: flex; !* Use flexbox for alignment *!*/
+/*    justify-content: center; !* Center the content *!*/
+/*    position: relative; !* Ensure positioning context for pseudo-elements *!*/
+/*    width: 100%; !* Full width of its parent *!*/
+/*    margin-bottom: 20px; !* Space below the title *!*/
+/*    margin-top: 10px;*/
+/*    padding: 5px 0;*/
+/*}*/
+
+/*.d3qb-title span {*/
+/*    background-color: #FFF;*/
+/*    padding: 0 10px;*/
+/*    font-weight: 700;*/
+/*    font-size: 18px;*/
+/*    position: relative; !* Bring the span in front of the lines *!*/
+/*    z-index: 1; !* Higher than the pseudo-elements *!*/
+/*}*/
+
+/*.d3qb-title:before,*/
+/*.d3qb-title:after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    transform: translateY(-50%);*/
+/*    width: 40%; !* Or adjust based on design needs *!*/
+/*    height: 1px;*/
+/*    background: #000;*/
+/*    z-index: 0; !* Ensure these are behind the text span *!*/
+/*}*/
+
+/*.d3qb-title:before {*/
+/*    left: 0;*/
+/*}*/
+
+/*.d3qb-title:after {*/
+/*    right: 0;*/
+/*}*/

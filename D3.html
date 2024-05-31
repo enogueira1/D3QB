@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="En">
+<head>
+    <title>D3 Visualization</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/styled3.css') }}">
+</head>
+<body>
+<div id="visualization-container">
+<!--    <div class="d3qb-title"><span>Pass Direction</span></div>-->
+    <div id="plot-area">
+        <!-- SVG will be appended here by D3 -->
+    </div>
+    <div id="legend-area">
+        <!-- First box -->
+        <div class="legend-box">
+            <div class="legend-filters-title">Filter by</div>
+            <div class="year-selector-container">
+                <div class="selector-title">Year</div>
+                <button id="left-arrow" class="year-toggle">&lt;</button>
+                <div id="year-display" class="year-display">2023</div>
+                <button id="right-arrow" class="year-toggle">&gt;</button>
+            </div>
+            <div class="week-selector-container">
+                <div class="selector-title week-title">Week</div>
+                <button id="week-left-arrow" class="week-toggle">&lt;</button>
+                <div id="week-display" class="week-display">
+                    <span id="week-number">All</span>
+                    <div class="week-dropdown-arrow">&#x25BC;</div>
+                </div>
+                <label for="week-dropdown"></label><select id="week-dropdown" class="week-dropdown"></select>
+                <button id="week-right-arrow" class="week-toggle">&gt;</button>
+            </div>
+        </div>
+        <!-- Second box -->
+        <div class="legend-elements">
+            <div class="legend-elements-title">Display</div>
+            <!-- ... Legend items added by D3 ... -->
+        </div>
+        <!-- Third box -->
+        <div class="legend-box-bubble">
+            <div class="legend-box-bubble-title">Enlarge</div>
+            <div class="toggle-container">
+                <div class="cleanToggle">
+                    <input type="checkbox" id="slider" />
+                    <label for="slider" class="slider-label" data-on="ON" data-off="OFF"></label>
+                </div>
+                <span class="toggle-text">Yards After Catch (YAC)</span>
+            </div>
+            <!-- EPA cleanToggle2 -->
+            <div class="toggle-container">
+                <div class="cleanToggle2">
+                    <input type="checkbox" id="slider2" />
+                    <label for="slider2" class="slider-label" data-on="ON" data-off="OFF"></label>
+                </div>
+                <span class="toggle-text">Expected Points Added (EPA)</span>
+            </div>
+            <!-- WPA cleanToggle3 -->
+            <div class="toggle-container">
+                <div class="cleanToggle3">
+                    <input type="checkbox" id="slider3" />
+                    <label for="slider3" class="slider-label" data-on="ON" data-off="OFF"></label>
+                </div>
+                <span class="toggle-text">Win Probability Added (WPA)</span>
+            </div>
+        </div>
+    </div>
+    <div id="tooltip"></div>
+    <script src="script.js"></script>
+</div>
+</body>
+</html>
